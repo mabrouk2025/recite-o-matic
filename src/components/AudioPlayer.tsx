@@ -57,6 +57,7 @@ const AudioPlayer: React.FC = () => {
 
   const [showVolumeSlider, setShowVolumeSlider] = React.useState(false);
   const [isMinimized, setIsMinimized] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(true);
 
   const getRepeatIcon = (mode: RepeatMode) => {
     switch (mode) {
@@ -77,14 +78,17 @@ const AudioPlayer: React.FC = () => {
     return <Volume2 className="h-5 w-5" />;
   };
 
-  if (!currentRecitation) {
+  if (!currentRecitation || !isVisible) {
     return null;
   }
 
   const { reciter, surah } = currentRecitation;
 
   const handleClose = () => {
-    setIsMinimized(!isMinimized);
+    if (isPlaying) {
+      togglePlayPause();
+    }
+    setIsVisible(false);
   };
 
   return (
@@ -107,7 +111,7 @@ const AudioPlayer: React.FC = () => {
                 </Button>
               </TooltipTrigger>
               <TooltipContent dir="rtl">
-                <p>{isMinimized ? "توسيع" : "تصغير"}</p>
+                <p>إغلاق</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
