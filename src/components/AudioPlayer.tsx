@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useAudioPlayer, type RepeatMode } from "@/context/AudioPlayerContext";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,8 @@ import {
   Volume2,
   Volume1,
   VolumeX,
-  X
+  X,
+  RotateCcw
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
@@ -52,7 +54,8 @@ const AudioPlayer: React.FC = () => {
     toggleRepeatMode,
     downloadRecitation,
     addToPlaylist,
-    shareRecitation
+    shareRecitation,
+    replayRecitation
   } = useAudioPlayer();
 
   const [showVolumeSlider, setShowVolumeSlider] = React.useState(false);
@@ -226,6 +229,24 @@ const AudioPlayer: React.FC = () => {
                       </TooltipTrigger>
                       <TooltipContent dir="rtl">
                         <p>السابق</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-9 w-9 md:h-10 md:w-10 rounded-full hover:bg-primary/10 transition-colors mr-1"
+                          onClick={replayRecitation}
+                        >
+                          <RotateCcw className="h-5 w-5" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent dir="rtl">
+                        <p>إعادة تشغيل</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>

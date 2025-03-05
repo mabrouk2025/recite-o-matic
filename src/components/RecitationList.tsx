@@ -11,13 +11,29 @@ const RecitationItem: React.FC<{ recitation: Recitation }> = ({ recitation }) =>
   
   const isActive = currentRecitation?.id === recitation.id;
   
+  // Open the player without auto-playing
+  const handleRecitationSelect = () => {
+    playRecitation(recitation);
+    if (isActive && isPlaying) {
+      // If it's already playing, toggle pause
+    } else {
+      // If it's not playing, pause it immediately
+      setTimeout(() => {
+        const { togglePlayPause } = useAudioPlayer();
+        if (isPlaying) {
+          togglePlayPause();
+        }
+      }, 0);
+    }
+  };
+  
   return (
     <Card 
       className={cn(
         "flex items-center gap-4 p-4 cursor-pointer transition-all hover:shadow-md",
         isActive ? "border-primary/30 bg-primary/5" : "hover:bg-accent/50"
       )}
-      onClick={() => playRecitation(recitation)}
+      onClick={handleRecitationSelect}
     >
       <Avatar className="h-14 w-14 rounded-full border-2 border-primary/20 overflow-hidden flex-shrink-0">
         <img 

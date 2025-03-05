@@ -46,6 +46,7 @@ interface AudioPlayerContextType {
   downloadRecitation: () => void;
   addToPlaylist: () => void;
   shareRecitation: () => void;
+  replayRecitation: () => void;
 }
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | undefined>(undefined);
@@ -297,6 +298,20 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  const replayRecitation = () => {
+    if (audioRef.current && currentRecitation) {
+      audioRef.current.currentTime = 0;
+      setCurrentTime(0);
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((error) => {
+          console.error('Error playing audio:', error);
+        });
+    }
+  };
+
   const value = {
     currentRecitation,
     isPlaying,
@@ -316,6 +331,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     downloadRecitation,
     addToPlaylist,
     shareRecitation,
+    replayRecitation,
   };
 
   return <AudioPlayerContext.Provider value={value}>{children}</AudioPlayerContext.Provider>;
