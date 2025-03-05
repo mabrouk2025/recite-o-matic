@@ -1,5 +1,5 @@
 
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -22,13 +22,12 @@ const NotFound = () => {
         <div className="text-muted-foreground mb-8">
           عذراً، الصفحة التي تبحث عنها غير متوفرة
         </div>
-        <Button
-          href="/"
-          className="inline-flex items-center gap-2 text-primary-foreground"
-        >
-          <span>العودة للصفحة الرئيسية</span>
-          <ArrowRight className="h-4 w-4" />
-        </Button>
+        <Link to="/">
+          <Button className="inline-flex items-center gap-2 text-primary-foreground">
+            <span>العودة للصفحة الرئيسية</span>
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

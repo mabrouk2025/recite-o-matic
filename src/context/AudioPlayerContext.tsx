@@ -1,6 +1,5 @@
-
 import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export interface Reciter {
   id: string;
@@ -62,7 +61,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
-  // Mock recitation data
   const recitations: Recitation[] = [
     {
       id: '1',
@@ -143,12 +141,10 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const handleEnded = () => {
       switch (repeatMode) {
         case 'surah':
-          // Repeat the current surah
           audio.currentTime = 0;
           audio.play();
           break;
         case 'none':
-          // Play next recitation if available
           nextRecitation();
           break;
         default:
@@ -234,7 +230,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if (currentIndex > 0) {
       playRecitation(recitations[currentIndex - 1]);
     } else {
-      // If it's the first track, restart the current track
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
         setCurrentTime(0);
@@ -271,7 +266,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const downloadRecitation = () => {
     if (!currentRecitation) return;
     
-    // Create a temporary link element to download the audio
     const link = document.createElement('a');
     link.href = currentRecitation.audioUrl;
     link.download = `${currentRecitation.reciter.name} - ${currentRecitation.surah.name}.mp3`;
@@ -283,7 +277,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const addToPlaylist = () => {
-    // Placeholder for adding to playlist functionality
     toast.success('تمت إضافة التلاوة إلى قائمة التشغيل');
   };
 
@@ -298,7 +291,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       })
       .catch((error) => console.error('Error sharing:', error));
     } else {
-      // Fallback copy to clipboard
       navigator.clipboard.writeText(window.location.href)
         .then(() => toast.success('تم نسخ رابط التلاوة إلى الحافظة'))
         .catch((error) => console.error('Error copying to clipboard:', error));
